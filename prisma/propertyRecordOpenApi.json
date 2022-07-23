@@ -1,0 +1,2361 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "NetSuite REST Record API",
+        "description": "NetSuite REST Record API generated 2022-07-23 at 14:55:21 UTC for account 1309901, user jmcdonald@hmsmarketingservices.com with role HMS Developer.",
+        "termsOfService": "http://www.netsuite.com/portal/resource/terms-of-service.shtml",
+        "contact": {
+            "name": "Oracle NetSuite",
+            "url": "http://www.netsuite.com",
+            "email": "info@netsuite.com"
+        },
+        "version": "v1"
+    },
+    "servers": [
+        {
+            "url": "https://1309901.suitetalk.api.netsuite.com/services/rest/record/v1"
+        }
+    ],
+    "security": [
+        {
+            "OAuth_1.0_authorization": []
+        }
+    ],
+    "paths": {
+        "/customrecord_property_record": {
+            "get": {
+                "tags": [
+                    "Customrecord_property_record"
+                ],
+                "summary": "Get list of records.",
+                "parameters": [
+                    {
+                        "name": "Prefer",
+                        "in": "header",
+                        "description": "The server behavior requested by the client. Use 'respond-async' to execute the request asynchronously. If the request is executed asynchronously, 'Preference-applied: respond-async' is returned in the response.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "respond-async"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "X-NetSuite-Idempotency-Key",
+                        "in": "header",
+                        "description": "A user-defined unique idempotency key that is applied to every asynchronous requests to ensure that the request is executed only once. Only one request can be executed with every unique idempotency key. Use UUID in string format as defined by RFC 4122. If the request is executed synchronously, this value is ignored.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "The search query that is used to filter results.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The limit used to specify the number of results on a single page.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 1000
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The offset used for selecting a specific page of results.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of records.",
+                        "content": {
+                            "application/vnd.oracle.resource+json; type=collection": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/customrecord_property_recordCollection"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "content": {
+                            "application/vnd.oracle.resource+json; type=error": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/nsError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Customrecord_property_record"
+                ],
+                "summary": "Insert record.",
+                "parameters": [
+                    {
+                        "name": "Prefer",
+                        "in": "header",
+                        "description": "The server behavior requested by the client. Use 'respond-async' to execute the request asynchronously. If the request is executed asynchronously, 'Preference-applied: respond-async' is returned in the response.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "respond-async"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "X-NetSuite-Idempotency-Key",
+                        "in": "header",
+                        "description": "A user-defined unique idempotency key that is applied to every asynchronous requests to ensure that the request is executed only once. Only one request can be executed with every unique idempotency key. Use UUID in string format as defined by RFC 4122. If the request is executed synchronously, this value is ignored.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "replace",
+                        "in": "query",
+                        "description": "The names of sublists on this record. All sublist lines will be replaced with lines specified in the request. The sublists not specified here will have lines added to the record. The names are delimited by comma.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "multiple sublists": {
+                                "value": "sublist1,subrecord.sublist2"
+                            },
+                            "sublist on subrecord": {
+                                "value": "subrecord.sublist"
+                            },
+                            "single sublist": {
+                                "value": "sublist"
+                            }
+                        }
+                    },
+                    {
+                        "name": "X-NetSuite-PropertyNameValidation",
+                        "in": "header",
+                        "description": "Sets the strictness of property name validation.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "Error",
+                                "Warning",
+                                "Ignore"
+                            ],
+                            "default": "Warning"
+                        }
+                    },
+                    {
+                        "name": "X-NetSuite-PropertyValueValidation",
+                        "in": "header",
+                        "description": "Sets the strictness of property value validation.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "Error",
+                                "Warning",
+                                "Ignore"
+                            ],
+                            "default": "Error"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request body.",
+                    "content": {
+                        "application/vnd.oracle.resource+json; type=singular": {
+                            "schema": {
+                                "$ref": "#/components/schemas/customrecord_property_record"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "Inserted record.",
+                        "headers": {
+                            "X-NetSuite-PropertyValidation": {
+                                "description": "The description of a property validation failure.",
+                                "required": false,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            },
+                            "X-NetSuite-Warning": {
+                                "description": "Warning messages that occurred during processing.",
+                                "required": false,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "content": {
+                            "application/vnd.oracle.resource+json; type=error": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/nsError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/customrecord_property_record/{id}": {
+            "get": {
+                "tags": [
+                    "Customrecord_property_record"
+                ],
+                "summary": "Get record.",
+                "parameters": [
+                    {
+                        "name": "Prefer",
+                        "in": "header",
+                        "description": "The server behavior requested by the client. Use 'respond-async' to execute the request asynchronously. If the request is executed asynchronously, 'Preference-applied: respond-async' is returned in the response.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "respond-async"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "X-NetSuite-Idempotency-Key",
+                        "in": "header",
+                        "description": "A user-defined unique idempotency key that is applied to every asynchronous requests to ensure that the request is executed only once. Only one request can be executed with every unique idempotency key. Use UUID in string format as defined by RFC 4122. If the request is executed synchronously, this value is ignored.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Internal identifier",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "expandSubResources",
+                        "in": "query",
+                        "description": "Set to 'true' to automatically expand all sublists, sublist lines, and subrecords on this record.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "simpleEnumFormat",
+                        "in": "query",
+                        "description": "Set to true to return enumeration values in a format that only shows the internal ID value.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "The names of the fields and sublists on the record. Only the selected fields and sublists will be returned in the response.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "multiple fields": {
+                                "value": "field1,field2"
+                            },
+                            "single field": {
+                                "value": "field"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retrived record.",
+                        "headers": {
+                            "X-NetSuite-Warning": {
+                                "description": "Warning messages that occurred during processing.",
+                                "required": false,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/vnd.oracle.resource+json; type=singular": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/customrecord_property_record"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "content": {
+                            "application/vnd.oracle.resource+json; type=error": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/nsError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Customrecord_property_record"
+                ],
+                "summary": "Insert or update record.",
+                "parameters": [
+                    {
+                        "name": "Prefer",
+                        "in": "header",
+                        "description": "The server behavior requested by the client. Use 'respond-async' to execute the request asynchronously. If the request is executed asynchronously, 'Preference-applied: respond-async' is returned in the response.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "respond-async"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "X-NetSuite-Idempotency-Key",
+                        "in": "header",
+                        "description": "A user-defined unique idempotency key that is applied to every asynchronous requests to ensure that the request is executed only once. Only one request can be executed with every unique idempotency key. Use UUID in string format as defined by RFC 4122. If the request is executed synchronously, this value is ignored.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "External identifier.",
+                        "required": true,
+                        "schema": {
+                            "pattern": "eid:(.+)",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "X-NetSuite-PropertyNameValidation",
+                        "in": "header",
+                        "description": "Sets the strictness of property name validation.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "Error",
+                                "Warning",
+                                "Ignore"
+                            ],
+                            "default": "Warning"
+                        }
+                    },
+                    {
+                        "name": "X-NetSuite-PropertyValueValidation",
+                        "in": "header",
+                        "description": "Sets the strictness of property value validation.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "Error",
+                                "Warning",
+                                "Ignore"
+                            ],
+                            "default": "Error"
+                        }
+                    },
+                    {
+                        "name": "replace",
+                        "in": "query",
+                        "description": "The names of sublists on this record. All sublist lines will be replaced with lines specified in the request. The sublists not specified here will have lines added to the record. The names are delimited by comma.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "multiple sublists": {
+                                "value": "sublist1,subrecord.sublist2"
+                            },
+                            "sublist on subrecord": {
+                                "value": "subrecord.sublist"
+                            },
+                            "single sublist": {
+                                "value": "sublist"
+                            }
+                        }
+                    },
+                    {
+                        "name": "replaceSelectedFields",
+                        "in": "query",
+                        "description": "If set to 'true', all fields that should be deleted in the update request, including body fields, must be included in the 'replace' query parameter.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request body.",
+                    "content": {
+                        "application/vnd.oracle.resource+json; type=singular": {
+                            "schema": {
+                                "$ref": "#/components/schemas/customrecord_property_record"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "Upserted record.",
+                        "headers": {
+                            "X-NetSuite-PropertyValidation": {
+                                "description": "The description of a property validation failure.",
+                                "required": false,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            },
+                            "X-NetSuite-Warning": {
+                                "description": "Warning messages that occurred during processing.",
+                                "required": false,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "content": {
+                            "application/vnd.oracle.resource+json; type=error": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/nsError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Customrecord_property_record"
+                ],
+                "summary": "Remove record.",
+                "parameters": [
+                    {
+                        "name": "Prefer",
+                        "in": "header",
+                        "description": "The server behavior requested by the client. Use 'respond-async' to execute the request asynchronously. If the request is executed asynchronously, 'Preference-applied: respond-async' is returned in the response.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "respond-async"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "X-NetSuite-Idempotency-Key",
+                        "in": "header",
+                        "description": "A user-defined unique idempotency key that is applied to every asynchronous requests to ensure that the request is executed only once. Only one request can be executed with every unique idempotency key. Use UUID in string format as defined by RFC 4122. If the request is executed synchronously, this value is ignored.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Internal identifier",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Removed record."
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "content": {
+                            "application/vnd.oracle.resource+json; type=error": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/nsError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Customrecord_property_record"
+                ],
+                "summary": "Update record.",
+                "parameters": [
+                    {
+                        "name": "Prefer",
+                        "in": "header",
+                        "description": "The server behavior requested by the client. Use 'respond-async' to execute the request asynchronously. If the request is executed asynchronously, 'Preference-applied: respond-async' is returned in the response.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "respond-async"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "X-NetSuite-Idempotency-Key",
+                        "in": "header",
+                        "description": "A user-defined unique idempotency key that is applied to every asynchronous requests to ensure that the request is executed only once. Only one request can be executed with every unique idempotency key. Use UUID in string format as defined by RFC 4122. If the request is executed synchronously, this value is ignored.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Internal identifier",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "X-NetSuite-PropertyNameValidation",
+                        "in": "header",
+                        "description": "Sets the strictness of property name validation.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "Error",
+                                "Warning",
+                                "Ignore"
+                            ],
+                            "default": "Warning"
+                        }
+                    },
+                    {
+                        "name": "X-NetSuite-PropertyValueValidation",
+                        "in": "header",
+                        "description": "Sets the strictness of property value validation.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "Error",
+                                "Warning",
+                                "Ignore"
+                            ],
+                            "default": "Error"
+                        }
+                    },
+                    {
+                        "name": "replace",
+                        "in": "query",
+                        "description": "The names of sublists on this record. All sublist lines will be replaced with lines specified in the request. The sublists not specified here will have lines added to the record. The names are delimited by comma.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "multiple sublists": {
+                                "value": "sublist1,subrecord.sublist2"
+                            },
+                            "sublist on subrecord": {
+                                "value": "subrecord.sublist"
+                            },
+                            "single sublist": {
+                                "value": "sublist"
+                            }
+                        }
+                    },
+                    {
+                        "name": "replaceSelectedFields",
+                        "in": "query",
+                        "description": "If set to 'true', all fields that should be deleted in the update request, including body fields, must be included in the 'replace' query parameter.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request body.",
+                    "content": {
+                        "application/vnd.oracle.resource+json; type=singular": {
+                            "schema": {
+                                "$ref": "#/components/schemas/customrecord_property_record"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "Updated record.",
+                        "headers": {
+                            "X-NetSuite-PropertyValidation": {
+                                "description": "The description of a property validation failure.",
+                                "required": false,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            },
+                            "X-NetSuite-Warning": {
+                                "description": "Warning messages that occurred during processing.",
+                                "required": false,
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Error response.",
+                        "content": {
+                            "application/vnd.oracle.resource+json; type=error": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/nsError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "nsResourceCollection": {
+                "type": "object",
+                "properties": {
+                    "links": {
+                        "title": "Links",
+                        "type": "array",
+                        "readOnly": true,
+                        "items": {
+                            "$ref": "#/components/schemas/nsLink"
+                        }
+                    },
+                    "totalResults": {
+                        "title": "Total Results",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/nsResource"
+                        }
+                    },
+                    "count": {
+                        "title": "Count",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "hasMore": {
+                        "title": "Has More Results",
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "offset": {
+                        "title": "Query Offset",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    }
+                }
+            },
+            "nsResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Internal identifier",
+                        "type": "string"
+                    },
+                    "refName": {
+                        "title": "Reference Name",
+                        "type": "string"
+                    },
+                    "externalId": {
+                        "title": "External identifier",
+                        "type": "string"
+                    },
+                    "links": {
+                        "title": "Links",
+                        "type": "array",
+                        "readOnly": true,
+                        "items": {
+                            "$ref": "#/components/schemas/nsLink"
+                        }
+                    }
+                }
+            },
+            "customrecord_property_record": {
+                "type": "object",
+                "properties": {
+                    "custrecord_temp_inline": {
+                        "title": "temp InlineHTML",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_rec_other": {
+                        "title": "Other",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_property_photos": {
+                        "title": "Property Photos",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_sale_email_to_agent_sent_chk": {
+                        "title": "Sale Email to Agent Sent",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_sale_email_to_agent_appr_date": {
+                        "title": "Sale Email to Agent Approval Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mw_additional_agent": {
+                        "title": "Additional Agent Name - Free Form Text",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_update_file_folders": {
+                        "title": "Update File Folders",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_matched_in_fischer_doc": {
+                        "title": "Matched in Fischer Doc",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_property_show_lot_number": {
+                        "title": "Show Lot Number",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_property_date_sales_st_update": {
+                        "title": "Date of Last Sales Status Update",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_commission_percent": {
+                        "title": "Commission %",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_prop_sales_mgr_email": {
+                        "title": "Sales Manager Email",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_last_csv_price": {
+                        "title": "Last CSV Price",
+                        "type": "number",
+                        "format": "double",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_selling_agent_comments": {
+                        "title": "Selling Agent Comments",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_loan_amount": {
+                        "title": "Loan Amount",
+                        "type": "number",
+                        "format": "double",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_elevation": {
+                        "title": "Elevation",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_primary_agent_id_free_form": {
+                        "title": "Primary Agent ID Free Form Text",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_emailed_listing_mls": {
+                        "title": "Email Listing to MLS",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_extend_pr_gen_public_up_link": {
+                        "title": "eXtendFiles Generate Public Upload Link",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_contract_received_date": {
+                        "title": "Contract Received From Builder",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_listing_date_mls_region2": {
+                        "title": "Listing Notification Date MLS Region 2",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_is_changed": {
+                        "title": "Property Changed",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_property_list_cabinet_files": {
+                        "title": "List of File Cabinet Files",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mw_additional_agent_role": {
+                        "title": "Additional Real Estate Agent Role",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_listing_date_mls_region1": {
+                        "title": "Listing Notification Date MLS Region 1",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_real_estate_agent_id_region_2": {
+                        "title": "Cooperating Real Estate Agent ID MLS 2",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_real_estate_agent_id_region_1": {
+                        "title": "Primary Real Estate Agent ID",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mw_check_remarks": {
+                        "title": "Check Remarks",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_closing_date_mls_region1": {
+                        "title": "Closing Notification Date MLS Region 1",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_closing_date_mls_region2": {
+                        "title": "Closing Notification Date MLS Region 2",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_property_dual_region_key": {
+                        "title": "Dual Region Key(Property)",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_extend_files_uploadon_propert": {
+                        "title": "eXtendFiles Upload on Record Inline Html",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mw_construction_start_date": {
+                        "title": "Construction Start Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_upper_living_area": {
+                        "title": "Upper Level(s) Living Area (sqft)",
+                        "type": "integer",
+                        "format": "int64",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mls_number_region2": {
+                        "title": "MLS Number - Region 2",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mls_number_region1": {
+                        "title": "MLS Number - Region 1",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_city": {
+                        "title": "City",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_listing_agreement": {
+                        "title": "Create Listing Agreement",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_property_url_from_builder": {
+                        "title": "Property URL From Builder",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_report_run_date": {
+                        "title": "Report Run Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_automated_agent_remark": {
+                        "title": "AGENT REMARKS - AUTOMATED",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_external_file_link": {
+                        "title": "External Access",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_sub_abbr": {
+                        "title": "Subdivision Abbreviation",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_corner_lot": {
+                        "title": "Corner Lot",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecordprop_division_mgr_email": {
+                        "title": "Division Manager Email",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "externalId": {
+                        "title": "External ID",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_entered_mls": {
+                        "title": "Entered into MLS",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_general_property_notes": {
+                        "title": "Listing Notes",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_closing_notes": {
+                        "title": "Closing Notes",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_extend_pr_public_upload_link": {
+                        "title": "eXtendFiles Public Upload Link",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "scriptId": {
+                        "title": "Script ID",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_estimated_closing_date": {
+                        "title": "Estimated Closing Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_sale_email_to_agent_sent_date": {
+                        "title": "Sale Email to Agent Sent Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_agent_remarks": {
+                        "title": "Agent Remarks",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_original_listing_price": {
+                        "title": "Original List Price",
+                        "type": "number",
+                        "format": "double",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_concessions": {
+                        "title": "Concessions",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_file_folder_id": {
+                        "title": "File Folder ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_subdiv_agnt_rem_ref": {
+                        "title": "Subdivision Agent Remark Reference(Don't Edit)",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mw_email_sent": {
+                        "title": "Sale/Closing email sent",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mls_direct_link": {
+                        "title": "MLS Direct Link",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_proofed_for_mls": {
+                        "title": "Proofed for MLS",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mw_enter_as_team": {
+                        "title": "Enter as Team",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_estimated_completion_date": {
+                        "title": "Estimated Completion Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mls_1_email": {
+                        "title": "MLS Region 1 Email Address",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_purchase_contract": {
+                        "title": "Purchase Contract",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord66": {
+                        "title": "Google Drive Link",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_house_number": {
+                        "title": "House Number",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord63": {
+                        "title": "Featured Listing End Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord62": {
+                        "title": "Featured Listing",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_hms_update_price_hidden": {
+                        "title": "Update Price Hidden",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord64": {
+                        "title": "Featured Listing Start Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "name": {
+                        "title": "Name",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_extra_selection_photos_added": {
+                        "title": "Extra Selection Photos Added to MLS",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_lot_number": {
+                        "title": "Lot Number",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_estimated_under_roof_date": {
+                        "title": "Estimated Under Roof Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_initial_photo": {
+                        "title": "Initial Photo",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_ready_to_be_entered": {
+                        "title": "Ready to be Entered into MLS",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_subd_abbr_w_stored_value": {
+                        "title": "Subdivision Abbr (w/ Stored Value)",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_agent_letter_not_sent_auto": {
+                        "title": "Agent Letter Not Sent",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_zip_code": {
+                        "title": "Zip Code",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_rec_permit": {
+                        "title": "Received Permit",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_resend_closing_notification": {
+                        "title": "Resend Closing Notification",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_secondary_address": {
+                        "title": "Secondary Address (For Corner Lots)",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_rec_mkt_home_info": {
+                        "title": "Received Market Home Info",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mw_last_reminder_date": {
+                        "title": "Last Reminder Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_read_only_financing_type": {
+                        "title": "Financing Type (Read Only)",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_date_received": {
+                        "title": "Date Listing Received from Builder",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mw_reminder_date_from_builder": {
+                        "title": "Reminder Date from Builder",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_show_property_construction": {
+                        "title": "Show New Construction",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_hud1": {
+                        "title": "HUD1",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_broker_office_id_mlsregion2": {
+                        "title": "Cooperating Real Estate Broker ID MLS 2",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_additional_agent_id_free_form": {
+                        "title": "Additional Agent ID - Free Form Text",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_extend_pr_file_list": {
+                        "title": "eXtendFiles Property Record Files List",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord19": {
+                        "title": "Administrative Contact's Phone Number",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "id": {
+                        "title": "Internal ID",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord18": {
+                        "title": "Administrative Contact's Email",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_sale_email_to_agent_appr_chk": {
+                        "title": "Sale Email to Agent Approval",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_total_living_area": {
+                        "title": "Total Living Area (sqft)",
+                        "type": "integer",
+                        "format": "int64",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord23": {
+                        "title": "Builder Sales Rep Mobile Phone",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord25": {
+                        "title": "Builder Sales Rep 3 Mobile Phone",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord24": {
+                        "title": "Builder Sales Rep 2 Mobile Phone",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_sale_notes": {
+                        "title": "Sale Notes",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_extend_pr_pubic_upload_uuid": {
+                        "title": "eXtendFiles Public upload UUID",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord20": {
+                        "title": "Property Showing Instuctions",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_abhi_prop_feature_ghost": {
+                        "title": "Please make us aware of any property features that should be reflected in MLS",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_total_basement": {
+                        "title": "Total Basement",
+                        "type": "integer",
+                        "format": "int64",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_subdivision_text": {
+                        "title": "Subdivision Text",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_prop_builder_closing_costs": {
+                        "title": "Builder Closing Cost",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_rec_photo": {
+                        "title": "Received Photo",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord26": {
+                        "title": "Model Phone Number",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord__prop_hms_callback_number": {
+                        "title": "HMS Callback Number",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_list_date": {
+                        "title": "List Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_secret_code": {
+                        "title": "Secret Code",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_seller_paid_closing_costs": {
+                        "title": "Seller Paid Closing Costs",
+                        "type": "number",
+                        "format": "double",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_proofed_date_time": {
+                        "title": "Proofed Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_hud_received_date": {
+                        "title": "HUD Received Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_market_home_info": {
+                        "title": "Market Home Information Sheet",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_financing_company": {
+                        "title": "Financing Company",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_email_to_mls": {
+                        "title": "Mail to MLS",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_date_of_last_record_update": {
+                        "title": "Date of Last Record Update (Experimental)",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_listing_notes": {
+                        "title": "Marketing Remarks",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord39": {
+                        "title": "Subdivision Showing Instructions",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mlsinfo_employee": {
+                        "title": "mlsinfo",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_job_number": {
+                        "title": "Job Number",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_property_date_const_update": {
+                        "title": "Date of Last Construction Update",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_sellers_iniitals": {
+                        "title": "Sellers Initials",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord50": {
+                        "title": "Closing Price",
+                        "type": "number",
+                        "format": "double",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_agent_involved_in_sale": {
+                        "title": "Agent Involved in Sale",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_buyers_last_name": {
+                        "title": "Buyer Name",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord45": {
+                        "title": "Builder Sales Rep 5 Mobile Phone",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_force_sales_notification": {
+                        "title": "Force Sales Notification",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord44": {
+                        "title": "Builder Sales Rep 4 Mobile Phone",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord41": {
+                        "title": "Division Showing Instructions",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_coop_commission": {
+                        "title": "Coop Commission %",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_main_living_area": {
+                        "title": "Main Level Living Area",
+                        "type": "integer",
+                        "format": "int64",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_temporarily_on_hold": {
+                        "title": "Temporarily On Hold",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_pending_date_mls_region2": {
+                        "title": "Pending Notification Date MLS Region 2",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_pending_date_mls_region1": {
+                        "title": "Pending Notification Date MLS Region 1",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_enable_sales_notifications": {
+                        "title": "Enable Sales Notifications",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mw_scheduled_date": {
+                        "title": "Sale/Closing Scheduled Notification",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_area": {
+                        "title": "Area",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_listing_agreement_doc": {
+                        "title": "Listing Agreement",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_closed_printfull2": {
+                        "title": "Closed Printfull MLS Region 2",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_closed_printfull1": {
+                        "title": "Closed Printfull MLS Region 1",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_agent_name_sn": {
+                        "title": "Primary Agent Name - Free Form Text",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "created": {
+                        "title": "Created",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_estimated_closing_price": {
+                        "title": "Estimated Closing Price",
+                        "type": "number",
+                        "format": "double",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_selling_team_name": {
+                        "title": "Selling Team Name",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_expiration_date": {
+                        "title": "Expiration Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_additional_selling_agent_id": {
+                        "title": "Additional Real Estate Agent ID",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_permit": {
+                        "title": "Permit",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_build_name_in_public_remark_p": {
+                        "title": "Builder Name is prohibited in public/marketing remarks",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "lastmodified": {
+                        "title": "Last modified",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_current_list_price": {
+                        "title": "Current List Price",
+                        "type": "number",
+                        "format": "double",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_whatever_name": {
+                        "title": "Delete This",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "isInactive": {
+                        "title": "Inactive",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_contract_approval_date": {
+                        "title": "Contract Approval Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_brokerage_name_sn": {
+                        "title": "Brokerage Name - Free Form Text",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_square_feet": {
+                        "title": "Square Feet",
+                        "type": "integer",
+                        "format": "int64",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_simple_name": {
+                        "title": "Simple Name",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_ctb_ghost_request_received": {
+                        "title": "CTB/Ghost Request Received Date",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_disable_bsr_update": {
+                        "title": "Disable BSR Update",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_sellers_signature": {
+                        "title": "Sellers Signature",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_actual_closing_date": {
+                        "title": "Actual Closing Date",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_last_record_update_type": {
+                        "title": "Last Record Upate Type",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_primary_selling_agent_email": {
+                        "title": "Primary Selling Agent Email",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mw_enable_test_property_email": {
+                        "title": "Enable as a Test Property to Send Email",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_real_estate_broker_id_mls1": {
+                        "title": "Real Estate Brokerage ID",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_display_paid_closing_cost": {
+                        "title": "Display Paid Closing Cost",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_commission": {
+                        "title": "Commission $",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_last_record_update_source": {
+                        "title": "Last Record Update Source",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_sales_notification_sent": {
+                        "title": "Sales Notification Sent",
+                        "type": "string",
+                        "format": "date",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mls_region_2_email": {
+                        "title": "MLS Region 2 Email Address",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_pending_printfull2": {
+                        "title": "Pending Printfull MLS Region 2",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_pending_printfull1": {
+                        "title": "Pending Printfull MLS Region 1",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_use_rendering": {
+                        "title": "Use Rendering on File",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_street_text": {
+                        "title": "Street Text",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_hms_signature": {
+                        "title": "Signature",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_show_agent_encourage_prop": {
+                        "title": "Show Agent Encouragement Property",
+                        "type": "boolean",
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_finished_lower_level": {
+                        "title": "Finished Lower Level",
+                        "type": "integer",
+                        "format": "int64",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_mw_primary_selling_agent": {
+                        "title": "Primary Selling Agent",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "custrecord_prop_builder_preferred_lender": {
+                        "title": "Builder Division Preferred Lender",
+                        "type": "string",
+                        "nullable": true,
+                        "x-ns-custom-field": true
+                    },
+                    "refName": {
+                        "title": "Reference Name",
+                        "type": "string"
+                    },
+                    "links": {
+                        "title": "Links",
+                        "type": "array",
+                        "readOnly": true,
+                        "items": {
+                            "$ref": "#/components/schemas/nsLink"
+                        }
+                    },
+                    "custrecord_mw_last_listing_amd": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_mw_closing_submitted_by": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "owner": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_construction_status_contract": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_top_level_builder": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_current_construction": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_mw_sale_submitted_by": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_created": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_mw_build_opt_personnel_select": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_selling_bsr": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_property_bsr_team_members": {
+                        "$ref": "#/components/schemas/nsResourceCollection"
+                    },
+                    "custrecord_time_zone": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord43": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord42": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_property_bsr_team_type": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_construction_status_listing": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_property_status": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_state": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_proofed_by": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_mw_sched_notif_type": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_user_entered_sales_status": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecordcustrecordsubdname": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_in_charge": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_floorplan": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord31": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_property_bsr_team": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_mw_build_pers_tobe_reminded": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_modified": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_property_assigned_to": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_mw_related": {
+                        "$ref": "#/components/schemas/customrecord_property_record"
+                    },
+                    "custrecord_mw_subdivision_sale_contact": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_financing_type": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_real_estate_broker_name": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord29": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_mw_builder_personnel_notified": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord28": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_additional_agent_record": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord61": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_listing_type": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord22": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_real_estate_agent_name": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord21": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord15": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord13": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord12": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord17": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord16": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord51": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord11": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord10": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_mw_subdiv_closing_contact": {
+                        "$ref": "#/components/schemas/nsResource"
+                    },
+                    "custrecord_mw_sched_notif_personnel": {
+                        "$ref": "#/components/schemas/nsResource"
+                    }
+                },
+                "x-ns-filterable": [
+                    "custrecord_state",
+                    "custrecord_property_bsr_team_type",
+                    "custrecord_user_entered_sales_status",
+                    "custrecord_rec_other",
+                    "custrecord_property_photos",
+                    "custrecord_sale_email_to_agent_sent_chk",
+                    "custrecord_sale_email_to_agent_appr_date",
+                    "custrecord_mw_additional_agent",
+                    "custrecord_update_file_folders",
+                    "custrecord_matched_in_fischer_doc",
+                    "custrecord_property_date_sales_st_update",
+                    "custrecord_commission_percent",
+                    "custrecord_selling_agent_comments",
+                    "custrecord_loan_amount",
+                    "custrecord_mw_build_opt_personnel_select",
+                    "custrecord_mw_sched_notif_type",
+                    "custrecord_property_bsr_team_members",
+                    "custrecord_elevation",
+                    "custrecord_primary_agent_id_free_form",
+                    "custrecord_emailed_listing_mls",
+                    "custrecord_extend_pr_gen_public_up_link",
+                    "custrecord_contract_received_date",
+                    "custrecord_listing_date_mls_region2",
+                    "custrecord_is_changed",
+                    "custrecord_property_list_cabinet_files",
+                    "custrecord_modified",
+                    "custrecord_mw_additional_agent_role",
+                    "custrecord_listing_date_mls_region1",
+                    "custrecord_real_estate_agent_id_region_2",
+                    "custrecord_real_estate_agent_id_region_1",
+                    "custrecord_mw_closing_submitted_by",
+                    "custrecord_mw_check_remarks",
+                    "custrecord_closing_date_mls_region1",
+                    "custrecord_closing_date_mls_region2",
+                    "custrecord_mw_construction_start_date",
+                    "custrecord_upper_living_area",
+                    "custrecord_mls_number_region2",
+                    "custrecord_mls_number_region1",
+                    "custrecord_mw_build_pers_tobe_reminded",
+                    "custrecord_city",
+                    "custrecord_listing_agreement",
+                    "custrecord_property_url_from_builder",
+                    "custrecord_report_run_date",
+                    "custrecord_automated_agent_remark",
+                    "custrecord_mw_builder_personnel_notified",
+                    "custrecord_external_file_link",
+                    "custrecord_corner_lot",
+                    "custrecordprop_division_mgr_email",
+                    "externalId",
+                    "custrecord61",
+                    "custrecord_entered_mls",
+                    "custrecord_general_property_notes",
+                    "custrecord_closing_notes",
+                    "custrecord_extend_pr_public_upload_link",
+                    "custrecord_created",
+                    "scriptId",
+                    "custrecord51",
+                    "custrecord_estimated_closing_date",
+                    "custrecord_financing_type",
+                    "custrecord_sale_email_to_agent_sent_date",
+                    "custrecord_agent_remarks",
+                    "custrecord_original_listing_price",
+                    "custrecord_concessions",
+                    "custrecord_property_bsr_team",
+                    "custrecord_mw_email_sent",
+                    "custrecord_mls_direct_link",
+                    "custrecord_proofed_for_mls",
+                    "custrecord_mw_enter_as_team",
+                    "custrecord_estimated_completion_date",
+                    "custrecord_real_estate_agent_name",
+                    "custrecord_house_number",
+                    "custrecord63",
+                    "custrecord62",
+                    "custrecord_hms_update_price_hidden",
+                    "custrecord64",
+                    "name",
+                    "custrecord_extra_selection_photos_added",
+                    "custrecord_lot_number",
+                    "custrecord_estimated_under_roof_date",
+                    "custrecord_ready_to_be_entered",
+                    "custrecord_subd_abbr_w_stored_value",
+                    "custrecord_agent_letter_not_sent_auto",
+                    "custrecord_mw_sched_notif_personnel",
+                    "custrecord_zip_code",
+                    "custrecord_rec_permit",
+                    "owner",
+                    "custrecord_resend_closing_notification",
+                    "custrecord_secondary_address",
+                    "custrecord_rec_mkt_home_info",
+                    "custrecord_mw_last_reminder_date",
+                    "custrecord_mw_sale_submitted_by",
+                    "custrecord_date_received",
+                    "custrecord_mw_reminder_date_from_builder",
+                    "custrecord_listing_type",
+                    "custrecord_broker_office_id_mlsregion2",
+                    "custrecord_selling_bsr",
+                    "custrecord_additional_agent_id_free_form",
+                    "custrecord_current_construction",
+                    "custrecord12",
+                    "custrecord11",
+                    "custrecord_construction_status_contract",
+                    "custrecord13",
+                    "custrecordcustrecordsubdname",
+                    "custrecord10",
+                    "custrecord19",
+                    "id",
+                    "custrecord16",
+                    "custrecord15",
+                    "custrecord18",
+                    "custrecord17",
+                    "custrecord_sale_email_to_agent_appr_chk",
+                    "custrecord_total_living_area",
+                    "custrecord_real_estate_broker_name",
+                    "custrecord_in_charge",
+                    "custrecord23",
+                    "custrecord22",
+                    "custrecord25",
+                    "custrecord24",
+                    "custrecord21",
+                    "custrecord_sale_notes",
+                    "custrecord_extend_pr_pubic_upload_uuid",
+                    "custrecord_time_zone",
+                    "custrecord20",
+                    "custrecord_abhi_prop_feature_ghost",
+                    "custrecord_total_basement",
+                    "custrecord_rec_photo",
+                    "custrecord26",
+                    "custrecord29",
+                    "custrecord__prop_hms_callback_number",
+                    "custrecord_list_date",
+                    "custrecord_secret_code",
+                    "custrecord_seller_paid_closing_costs",
+                    "custrecord_proofed_date_time",
+                    "custrecord31",
+                    "custrecord_hud_received_date",
+                    "custrecord_financing_company",
+                    "custrecord_email_to_mls",
+                    "custrecord_date_of_last_record_update",
+                    "custrecord_listing_notes",
+                    "custrecord_job_number",
+                    "custrecord_property_date_const_update",
+                    "custrecord_mw_related",
+                    "custrecord50",
+                    "custrecord_agent_involved_in_sale",
+                    "custrecord_buyers_last_name",
+                    "custrecord45",
+                    "custrecord_force_sales_notification",
+                    "custrecord44",
+                    "custrecord_coop_commission",
+                    "custrecord_main_living_area",
+                    "custrecord43",
+                    "custrecord42",
+                    "custrecord_mw_last_listing_amd",
+                    "custrecord_temporarily_on_hold",
+                    "custrecord_pending_date_mls_region2",
+                    "custrecord_pending_date_mls_region1",
+                    "custrecord_enable_sales_notifications",
+                    "custrecord_mw_scheduled_date",
+                    "custrecord_proofed_by",
+                    "custrecord_property_assigned_to",
+                    "custrecord_agent_name_sn",
+                    "custrecord_floorplan",
+                    "created",
+                    "custrecord_estimated_closing_price",
+                    "custrecord_selling_team_name",
+                    "custrecord_expiration_date",
+                    "custrecord_additional_selling_agent_id",
+                    "lastmodified",
+                    "custrecord_top_level_builder",
+                    "custrecord_current_list_price",
+                    "custrecord_whatever_name",
+                    "isInactive",
+                    "custrecord_property_status",
+                    "custrecord_contract_approval_date",
+                    "custrecord_brokerage_name_sn",
+                    "custrecord_square_feet",
+                    "custrecord_construction_status_listing",
+                    "custrecord_simple_name",
+                    "custrecord_ctb_ghost_request_received",
+                    "custrecord_disable_bsr_update",
+                    "custrecord_actual_closing_date",
+                    "custrecord_last_record_update_type",
+                    "custrecord_mw_enable_test_property_email",
+                    "custrecord_real_estate_broker_id_mls1",
+                    "custrecord_commission",
+                    "custrecord_last_record_update_source",
+                    "custrecord_sales_notification_sent",
+                    "custrecord_use_rendering",
+                    "custrecord_street_text",
+                    "custrecord_finished_lower_level",
+                    "custrecord_mw_primary_selling_agent",
+                    "custrecord_additional_agent_record"
+                ],
+                "x-ns-custom-record": true
+            },
+            "nsError": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "title": "Type",
+                        "type": "string",
+                        "description": "A URI reference to the documentation about the problem type.",
+                        "format": "URI",
+                        "readOnly": true
+                    },
+                    "title": {
+                        "title": "Title",
+                        "type": "string",
+                        "description": "A human-readable description of the problem type.",
+                        "readOnly": true
+                    },
+                    "status": {
+                        "title": "Status",
+                        "type": "integer",
+                        "description": "The HTTP status code generated by the server the request originates from.",
+                        "format": "int32",
+                        "readOnly": true
+                    },
+                    "o:errorDetails": {
+                        "type": "array",
+                        "description": "An array containing one or more problem types.",
+                        "readOnly": true,
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "detail": {
+                                    "title": "Detail",
+                                    "type": "string",
+                                    "description": "A detailed, human-readable description of the problem occurrence.",
+                                    "readOnly": true
+                                },
+                                "o:errorPath": {
+                                    "title": "Error Path",
+                                    "type": "string",
+                                    "description": "The JSON path that indicates where the problem occurs within the request body.",
+                                    "format": "JSONPath",
+                                    "readOnly": true
+                                },
+                                "o:errorUrl": {
+                                    "title": "Error URL",
+                                    "type": "string",
+                                    "description": "The URI of the first element in the request URL where the problem occurs.",
+                                    "format": "URI",
+                                    "readOnly": true
+                                },
+                                "o:errorHeader": {
+                                    "title": "Error Header",
+                                    "type": "string",
+                                    "description": "The name of the HTTP header where the problem occurs.",
+                                    "readOnly": true
+                                },
+                                "o:errorQueryParam": {
+                                    "title": "Error Query Parameter",
+                                    "type": "string",
+                                    "description": "The name of the query parameter where the problem occurs.",
+                                    "readOnly": true
+                                },
+                                "o:errorCode": {
+                                    "title": "Error Code",
+                                    "type": "string",
+                                    "description": "The application-specific error code. Similar problem types are grouped together.",
+                                    "readOnly": true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "nsLink": {
+                "type": "object",
+                "properties": {
+                    "rel": {
+                        "title": "Relationship",
+                        "type": "string",
+                        "readOnly": true
+                    },
+                    "href": {
+                        "title": "Hypertext Reference",
+                        "type": "string",
+                        "readOnly": true
+                    }
+                }
+            },
+            "customrecord_property_recordCollection": {
+                "type": "object",
+                "properties": {
+                    "totalResults": {
+                        "title": "Total Results",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "items": {
+                        "title": "Items",
+                        "type": "array",
+                        "description": "An array field that represents a collection of elements, for example, sublist lines, multiselect items, or search results.",
+                        "items": {
+                            "$ref": "#/components/schemas/customrecord_property_record"
+                        }
+                    },
+                    "links": {
+                        "title": "Links",
+                        "type": "array",
+                        "readOnly": true,
+                        "items": {
+                            "$ref": "#/components/schemas/nsLink"
+                        }
+                    },
+                    "count": {
+                        "title": "Count",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    },
+                    "hasMore": {
+                        "title": "Has More Results",
+                        "type": "boolean",
+                        "readOnly": true
+                    },
+                    "offset": {
+                        "title": "Query Offset",
+                        "type": "integer",
+                        "format": "int64",
+                        "readOnly": true
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "OAuth_1.0_authorization": {
+                "type": "apiKey",
+                "description": "OAuth 1.0 - https://tools.ietf.org/html/rfc5849",
+                "name": "authorization",
+                "in": "header"
+            }
+        }
+    }
+}
